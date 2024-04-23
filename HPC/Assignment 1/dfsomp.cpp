@@ -4,92 +4,49 @@
 
 using namespace std;
 
-void merge(vector<int>& arr, int l, int m, int r) {
-    int i, j, k;
-    int n1 = m - l + 1;
-    int n2 = r - m;
-    vector<int> L(n1), R(n2);
-    for (i = 0; i < n1; i++) {
-        L[i] = arr[l + i];
-    }
-    for (j = 0; j < n2; j++) {
-        R[j] = arr[m + 1 + j];
-    }
-    i = 0;
-    j = 0;
-    k = l;
-    while (i < n1 && j < n2) {
-        if (L[i] <= R[j]) {
-            arr[k++] = L[i++];
-        } else {
-            arr[k++] = R[j++];
+const int MAXN = 1e5;
+vector<int> adj[MAXN + 5]; // adjacency list
+bool visited[MAXN + 5];     // mark visited nodes
+
+void dfs(int node) {
+    visited[node] = true;
+    cout << node << " "; // Print the visited node here
+
+    // Parallel loop for visiting adjacent nodes
+#pragma omp parallel for
+    for (int i = 0; i < adj[node].size(); i++) {
+        int next_node = adj[node][i];
+        if (!visited[next_node]) {
+            // Call DFS recursively for each adjacent node
+            dfs(next_node);
         }
-    }
-    while (i < n1) {
-        arr[k++] = L[i++];
-    }
-    while (j < n2) {
-        arr[k++] = R[j++];
-    }
-}
-
-void merge_sort(vector<int>& arr, int l, int r) {
-    if (l < r) {
-        int m = l + (r - l) / 2;
-#pragma omp task
-        merge_sort(arr, l, m);
-#pragma omp task
-        merge_sort(arr, m + 1, r);
-#pragma omp taskwait
-        merge(arr, l, m, r);
-    }
-}
-
-void parallel_merge_sort(vector<int>& arr) {
-#pragma omp parallel
-    {
-#pragma omp single
-        merge_sort(arr, 0, arr.size() - 1);
     }
 }
 
 int main() {
-    int n;
-    cout << "Enter the number of elements: ";
-    cin >> n;
-    vector<int> arr(n);
-    cout << "Enter " << n << " elements: ";
-    for (int i = 0; i < n; ++i) {
-        cin >> arr[i];
+    cout << "Please enter nodes and edges: ";
+    int n, m; // number of nodes and edges
+    cin >> n >> m;
+    for (int i = 1; i <= m; i++) {
+        int u, v; // edge between u and v
+        cin >> u >> v;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
     }
-
-    double start, end;
-
-    // Measure performance of sequential merge sort
-    start = omp_get_wtime();
-    merge_sort(arr, 0, arr.size() - 1);
-    end = omp_get_wtime();
-    cout << "Sequential merge sort time: " << (end - start) * 1000 << " milliseconds" << endl;
-    
-    // Show sorted numbers
-    cout << "Sorted numbers: ";
-    for (size_t i = 0; i < arr.size(); ++i) {
-        cout << arr[i] << " ";
-    }
-    cout << endl;
-
-    // Measure performance of parallel merge sort
-    start = omp_get_wtime();
-    parallel_merge_sort(arr);
-    end = omp_get_wtime();
-    cout << "Parallel merge sort time: " << (end - start) * 1000 << " milliseconds" << endl;
-
-    // Show sorted numbers
-    cout << "Sorted numbers: ";
-    for (size_t i = 0; i < arr.size(); ++i) {
-        cout << arr[i] << " ";
-    }
-    cout << endl;
-
+    int start_node; // start node of DFS
+    cout << "Enter the start node for DFS: ";
+    cin >> start_node;
+    dfs(start_node);
+    cout << endl; // Print a newline after DFS traversal
     return 0;
 }
+
+/* Please enter nodes and edges: 6 6
+0 1
+0 2
+1 3
+2 4
+3 5
+4 5
+Enter the start node for DFS: 0
+0 1 3 5 4 2*/
