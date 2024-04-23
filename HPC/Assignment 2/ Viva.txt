@@ -42,11 +42,15 @@ Merge Function: Combines two sorted subarrays into one sorted array.
 
 Merge Sort Function: Recursively divides the array into smaller subarrays until they contain only one element. Then, it merges these sorted subarrays back together.
 
-Parallel Merge Sort Function: Uses OpenMP to parallelize the merge sort algorithm. It creates tasks for each recursive call to merge_sort, allowing multiple threads to sort different parts of the array simultaneously.
+Parallel Merge Sort Function: Uses OpenMP to parallelize the merge sort algorithm. It creates tasks for each recursive call to merge_sort, allowing multiple 
+threads to sort different parts of the array simultaneously.
 
 Main Function: Measures the execution time of both sequential and parallel merge sort algorithms and displays the sorted array along with the execution times.
 
 In short, OpenMP tasks enable multiple threads to work on sorting different parts of the array simultaneously, speeding up the merge sort algorithm
 
 ------------------------------------------Bubble Sort------------------------------------------
-The parallel execution is achieved by distributing the iterations of the inner loop across multiple threads using OpenMP directives. Each thread works independently on a subset of the array, comparing and swapping elements. The #pragma omp parallel for directive creates a team of threads, and the shared clause ensures that variables like the array and the swapped flag are accessible to all threads. This parallelism allows for faster sorting by utilizing multiple processor cores simultaneously.
+The parallel execution is achieved by distributing the iterations of the inner loop across multiple threads using OpenMP directives. Each thread works 
+independently on a subset of the array, comparing and swapping elements. The #pragma omp parallel for directive creates a team of threads, and the shared clause 
+ensures that variables like the array and the swapped flag are accessible to all threads. This parallelism allows for faster sorting by utilizing multiple 
+processor cores simultaneously.
