@@ -51,3 +51,17 @@ int main() {
     cout << endl; // Print a newline after BFS traversal
     return 0;
 }
+
+
+/*
+Please enter nodes and edges: 6 6
+0 1
+0 2
+1 3
+2 4
+3 5
+4 5
+Enter the start node for BFS: 0
+
+0 1 2 3 4 5 
+*/
