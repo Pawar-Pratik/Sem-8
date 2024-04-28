@@ -1,0 +1,24 @@
+-----------------------------Multiplication-----------------------------
+Kernel Function:
+The gpuMM kernel function is responsible for computing the product of two matrices A and B and storing the result in matrix C.
+Each thread in the GPU is responsible for computing one element of the resulting matrix C.
+The thread indices (row and col) are computed using the block and thread indices, and they determine which element of matrix C each thread computes.
+
+Main Function:
+The main function first prompts the user to enter the size of the matrices (N). It ensures that N is a multiple of BLOCK_SIZE, which is necessary for proper block division.
+Memory for matrices A, B, and C is allocated on the host (hA, hB, hC).
+The matrices A and B are read from the user and copied from the host to the device memory (dA, dB) using cudaMemcpy.
+The grid and thread block dimensions are defined based on the size of the matrices and BLOCK_SIZE.
+The kernel function gpuMM is launched with the specified grid and thread block dimensions to perform the matrix multiplication on the GPU.
+The resulting matrix C is copied from the device to the host memory (hC) using cudaMemcpy.
+Finally, the result matrix C is displayed, and memory allocated on both the host and the device is freed.
+
+Parallelization:
+Parallelism is achieved by launching multiple threads on the GPU to perform matrix multiplication concurrently.
+Each thread computes one element of the resulting matrix C, which enables parallel execution of the matrix multiplication operation.
+The use of CUDA allows for efficient utilization of the GPU's processing power, enabling significant speedup for large matrix sizes compared to sequential execution on the CPU.
+
+In summary, the code achieves parallelism by offloading the matrix multiplication computation to the GPU and leveraging CUDA's parallel execution model to perform the computation concurrently using multiple threads.
+
+
+-----------------------------Addition-----------------------------

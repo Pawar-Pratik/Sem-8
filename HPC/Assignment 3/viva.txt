@@ -1,0 +1,20 @@
+Include Headers: The code includes necessary headers like <iostream>, <vector>, <omp.h>, and <climits>.
+
+Namespace: The using namespace std; statement brings all the symbols in the standard C++ library into the current namespace for convenience.
+
+Function Definitions:
+min_reduction, max_reduction, sum_reduction, and average_reduction are functions to calculate the minimum, maximum, sum, and average of elements in a given vector, respectively. They use OpenMP reduction clauses to parallelize the operations.
+
+Main Function:
+The main function first prompts the user to input the number of elements (n) and then the elements themselves.
+It then calls each of the four reduction functions (min_reduction, max_reduction, sum_reduction, and average_reduction) passing the vector of elements to each function.
+
+Parallelization:
+Inside each reduction function, OpenMP directives are used to parallelize the for loop that iterates over the elements of the vector.
+The #pragma omp parallel for directive parallelizes the loop by distributing its iterations among multiple threads.
+The reduction clause in each directive ensures that each thread has its own private copy of the specified variable(s) (min_value, max_value, sum), and at the end of the parallel region, these private copies are combined together according to the specified operation (min, max, +) to produce the final result.
+This way, the minimum, maximum, sum, and average of the elements are computed in parallel by multiple threads, utilizing the available CPU cores efficiently.
+
+Output:
+After the parallel computation in each reduction function, the computed result is printed to the console.
+So theoretically, the provided code parallelizes the computation of minimum, maximum, sum, and average of elements in a vector using OpenMP directives, allowing multiple threads to work on different portions of the vector simultaneously and combining the results at the end to obtain the final output.

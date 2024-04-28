@@ -1,0 +1,30 @@
+------------------------------------------DFS------------------------------------------
+Data Structures:
+The code defines an adjacency list adj to represent the graph.
+An array visited is used to mark visited nodes during the DFS traversal.
+
+DFS Function:
+The dfs function implements the Depth-First Search algorithm recursively.
+It marks the current node as visited, prints it, and then recursively calls dfs on all unvisited adjacent nodes.
+
+Parallelization:
+The parallelization occurs within the loop that iterates over the adjacent nodes of the current node.
+The #pragma omp parallel for directive parallelizes this loop. Each iteration, which corresponds to visiting an adjacent node, can potentially be executed in parallel by different threads.
+Inside the loop, if an adjacent node is not visited, a recursive call to dfs is made. These recursive calls can be executed in parallel by different threads.
+Note that visited array is shared among all threads, but each thread marks only its own visited nodes, avoiding race conditions.
+
+Main Function:
+Reads the number of nodes and edges from the user.
+Constructs the graph by reading the edges.
+Takes input for the start node of DFS.
+Calls dfs with the start node.
+
+Example:
+The provided example inputs a graph with 6 nodes and 6 edges.
+It starts DFS traversal from node 0.
+The output shows the nodes visited during the DFS traversal: 0 1 3 5 4 2.
+
+In summary, the code parallelizes the DFS traversal by using OpenMP to execute the recursive calls to dfs in parallel for unvisited adjacent nodes, allowing multiple threads to explore different parts of the graph simultaneously.
+
+
+------------------------------------------BFS------------------------------------------

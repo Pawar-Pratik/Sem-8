@@ -1,0 +1,56 @@
+Sorting-
+Bubble Sort:
+Compares adjacent elements and swaps them if they are in the wrong order.
+Repeats this process until the array is sorted.
+It's simple but inefficient, especially for large datasets.
+Example: [5, 3, 8, 2, 1]
+Iteration 1: [3, 5, 2, 1, 8]
+Iteration 2: [3, 2, 1, 5, 8]
+Iteration 3: [2, 1, 3, 5, 8]
+Iteration 4: [1, 2, 3, 5, 8]
+Sorted array: [1, 2, 3, 5, 8]
+
+Merge Sort:
+Divides the array into two halves, recursively sorts each half, and then merges them.
+It's a divide-and-conquer algorithm with guaranteed O(n log n) time complexity, making it efficient for large datasets.
+It requires additional space proportional to the size of the input array.
+Example: [5, 3, 8, 2, 1]
+Split into [5, 3, 8] and [2, 1]
+Split [5, 3, 8] into [5, 3] and [8]
+Merge [5] and [3] into [3, 5]
+Merge [3, 5] and [8] into [3, 5, 8]
+Split [2, 1] into [2] and [1]
+Merge [2] and [1] into [1, 2]
+Merge [3, 5, 8] and [1, 2] into [1, 2, 3, 5, 8]
+Sorted array: [1, 2, 3, 5, 8]
+
+Quick Sort:
+Picks a 'pivot' element and partitions the array into two sub-arrays such that elements less than the pivot are on the left and greater are on the right.
+Recursively applies this process to the sub-arrays.
+It has an average-case time complexity of O(n log n) but can degrade to O(n^2) in the worst case.
+It's widely used due to its efficiency and can be optimized for better performance.
+Example: [5, 3, 8, 2, 1]
+Choose pivot (e.g., 3)
+Partition into [2, 1], 3, [5, 8]
+Recursively sort [2, 1] (choose pivot 1, partition into [1] and [2])
+Recursively sort [5, 8] (choose pivot 8, partition into [5] and [8])
+Combine sorted sub-arrays: [1, 2], 3, [5, 8]
+Sorted array: [1, 2, 3, 5, 8]
+
+------------------------------------------Merge Sort------------------------------------------
+Merge Function: Combines two sorted subarrays into one sorted array.
+
+Merge Sort Function: Recursively divides the array into smaller subarrays until they contain only one element. Then, it merges these sorted subarrays back together.
+
+Parallel Merge Sort Function: Uses OpenMP to parallelize the merge sort algorithm. It creates tasks for each recursive call to merge_sort, allowing multiple 
+threads to sort different parts of the array simultaneously.
+
+Main Function: Measures the execution time of both sequential and parallel merge sort algorithms and displays the sorted array along with the execution times.
+
+In short, OpenMP tasks enable multiple threads to work on sorting different parts of the array simultaneously, speeding up the merge sort algorithm
+
+------------------------------------------Bubble Sort------------------------------------------
+The parallel execution is achieved by distributing the iterations of the inner loop across multiple threads using OpenMP directives. Each thread works 
+independently on a subset of the array, comparing and swapping elements. The #pragma omp parallel for directive creates a team of threads, and the shared clause 
+ensures that variables like the array and the swapped flag are accessible to all threads. This parallelism allows for faster sorting by utilizing multiple 
+processor cores simultaneously.
